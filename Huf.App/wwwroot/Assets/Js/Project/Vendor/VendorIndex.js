@@ -11,15 +11,15 @@
         document.querySelector('.loader-overlay').style.display = 'none';
     }
     // Initialize the jQuery Validation plugin for your form
-    $("#createNewDivisionForm").validate({
+    $("#createNewVendorForm").validate({
         rules: {
-            DivisionCode: {
+            VendorCode: {
                 required: true,
                 minlength: 5,
                 maxlength: 15,
                 pattern: /^[a-zA-Z0-9\s-._]+$/,
             },
-            Division: {
+            Vendor: {
                 required: true,
                 minlength: 5,
                 maxlength: 50,
@@ -27,16 +27,16 @@
             },
         },
         messages: {
-            DivisionCode: {
-                required: "Please enter a Division code",
-                minlength: "Division code must be at least 5 characters long",
-                maxlength: "Division code must be at most 15 characters long",
+            VendorCode: {
+                required: "Please enter a Vendor code",
+                minlength: "Vendor code must be at least 5 characters long",
+                maxlength: "Vendor code must be at most 15 characters long",
                 pattern: "Special characters are not allowed",
             },
-            Division: {
-                required: "Please enter a Division Name",
-                minlength: "Division must be at least 5 characters long",
-                maxlength: "Division must be at most 50 characters long",
+            Vendor: {
+                required: "Please enter a Vendor Name",
+                minlength: "Vendor must be at least 5 characters long",
+                maxlength: "Vendor must be at most 50 characters long",
                 pattern: "Special characters are not allowed",
             },
         },
@@ -80,12 +80,12 @@
             srno++
         }
         // Destroy existing DataTable instance (if it exists)
-        var table = $('#TblDivision').DataTable();
+        var table = $('#TblVendor').DataTable();
         table.destroy();
         // Clear the table body
-        $('#TblDivision tbody').empty();
+        $('#TblVendor tbody').empty();
         // Populate the table body with data
-        var tbody = $('#TblDivision tbody');
+        var tbody = $('#TblVendor tbody');
         arrayReturn.forEach(function (rowData) {
             var row = $('<tr>');
             //ketan start 20240307
@@ -97,7 +97,7 @@
             tbody.append(row);
         });
         // Initialize DataTable after binding data
-        var table = $('#TblDivision').DataTable({
+        var table = $('#TblVendor').DataTable({
             paging: true,
             pagingType: 'simple_numbers',
             language: {
@@ -163,14 +163,14 @@
 
         // Handle "Select All" checkbox click
         $('.selectAllCheckbox').on('click', function () {
-            var table = $('#TblDivision').DataTable(); // Initialize DataTable
+            var table = $('#TblVendor').DataTable(); // Initialize DataTable
             var isChecked = $(this).is(':checked');
             table.rows().select(isChecked);
             $('.rowCheckbox').prop('checked', isChecked);
         });
         // Handle individual row checkbox click
-        $('#TblDivision tbody').on('click', '.rowCheckbox', function (e) {
-            var table = $('#TblDivision').DataTable(); // Initialize DataTable
+        $('#TblVendor tbody').on('click', '.rowCheckbox', function (e) {
+            var table = $('#TblVendor').DataTable(); // Initialize DataTable
             e.stopPropagation();
             var isChecked = $(this).prop('checked');
             var row = $(this).closest('tr');
@@ -178,8 +178,8 @@
             table.row(row).select(isChecked);
         });
         // Handle individual row click (except the checkbox)
-        $('#TblDivision tbody').on('click', 'tr:not(.select-checkbox)', function (e) {
-            var table = $('#TblDivision').DataTable(); // Initialize DataTable
+        $('#TblVendor tbody').on('click', 'tr:not(.select-checkbox)', function (e) {
+            var table = $('#TblVendor').DataTable(); // Initialize DataTable
             e.stopPropagation(); // Prevent row click from triggering selection
             var checkbox = $(this).find('.rowCheckbox');
             var isChecked = !checkbox.prop('checked'); // Toggle checkbox state
@@ -192,7 +192,7 @@
         // Highlight selected rows with a custom class
         table.on('select deselect', function (e, dt, type, indexes) {
             if (type === 'row') {
-                var table = $('#TblDivision').DataTable(); // Initialize DataTable
+                var table = $('#TblVendor').DataTable(); // Initialize DataTable
                 var row = table.row(indexes).node();
                 $(row).toggleClass('selected', dt.rows(indexes).any());
             }
@@ -209,71 +209,71 @@
     }
     function resetModal() {
         // Reset input fields in the modal
-        $('#DivisionCode').val('');
-        $('#Division').val('');
+        $('#VendorCode').val('');
+        $('#Vendor').val('');
         $('#GUID').val('');
         $('#isActive').prop('checked', false).prop('disabled', false);
-        $('#createNewDivisionForm').find('.form-control').val('').removeClass('is-invalid');
-        $('#createNewDivisionForm').removeClass('was-validated');
+        $('#createNewVendorForm').find('.form-control').val('').removeClass('is-invalid');
+        $('#createNewVendorForm').removeClass('was-validated');
     }
     // Handle the "Save" button click event
     $('#btnCancel').click(function () {
         resetModal();
-        $('#createNewDivision').modal('hide');
+        $('#createNewVendor').modal('hide');
     });
     $('#closemodal').click(function () {
         resetModal();
-        $('#createNewDivision').modal('hide');
+        $('#createNewVendor').modal('hide');
     });
     // Handle the "Add" button click event
     $('#btnCreateData').click(function () {
         // Reset modal fields
         resetModal();
-        // Change modal title to "Create Division"
-        $('#lblmodeltitle').text('Create Division');
+        // Change modal title to "Create Vendor"
+        $('#lblmodeltitle').text('Create Vendor');
         $('#isActive').prop('checked', true).prop('disabled', true);
 
         // Show the modal for creating
-        $('#createNewDivision').modal('show');
+        $('#createNewVendor').modal('show');
     });
-    $('#btnAddDivision').click(function () {
+    $('#btnAddVendor').click(function () {
         // Reset modal fields
         resetModal();
-        // Change modal title to "Create Division"
-        $('#lblmodeltitle').text('Create Division');
+        // Change modal title to "Create Vendor"
+        $('#lblmodeltitle').text('Create Vendor');
         $('#isActive').prop('checked', true).prop('disabled', true);
         // Show the modal for creating
-        $('#createNewDivision').modal('show');
+        $('#createNewVendor').modal('show');
     });
     function insertRecord() {
-        var NewDivisionCode = $('#DivisionCode').val();
-        var NewDivision = $('#Division').val().toLowerCase().trim();
-        var table = $('#TblDivision').DataTable();
+        var NewVendorCode = $('#VendorCode').val();
+        var NewVendor = $('#Vendor').val().toLowerCase().trim();
+        var table = $('#TblVendor').DataTable();
         var existingData = table.rows().data();
         var isDuplicate = false;
         existingData.each(function (row) {
             //ketan start 20240307
-            var DivisionCode = row[2];
-            var Division = row[3].toLowerCase().trim();
+            var VendorCode = row[2];
+            var Vendor = row[3].toLowerCase().trim();
             //ketan end 20240307
-            if (DivisionCode === NewDivisionCode && Division === NewDivision) {
+            if (VendorCode === NewVendorCode && Vendor === NewVendor) {
                 isDuplicate = true;
                 return false;
             }
         });
         if (isDuplicate) {
-            showNotification("Duplicate entry: Division already exists", 'error');
+            showNotification("Duplicate entry: Vendor already exists", 'error');
         } else {
             // Continue with the insert action
             var requestData = {
-                DivisionCode: $('#DivisionCode').val(),
-                Division: $('#Division').val(),
+                VendorCode: $('#VendorCode').val(),
+                Vendor: $('#Vendor').val(),
                 IsActive: $('#isActive').prop('checked'),
             };
             // Make an AJAX call to the insert action
             $.ajax({
                 type: 'POST',
-                url: '/Division/Insert',
+                url: '/Vendor/Insert',
                 contentType: 'application/json',
                 data: JSON.stringify(requestData),
                 success: function (response) {
@@ -282,7 +282,7 @@
                     // Fetch and bind data again after successful insert
                     fetchDataAndBindTable();
                     resetModal();
-                    $('#createNewDivision').modal('hide');
+                    $('#createNewVendor').modal('hide');
                 },
                 error: function (error) {
                     // Handle error, e.g., show an error notification
@@ -293,40 +293,40 @@
     }
     // Function to handle the update action
     function updateRecord() {
-        var NewDivisionCode = $('#DivisionCode').val();
-        var NewDivision = $('#Division').val().toLowerCase().trim();
+        var NewVendorCode = $('#VendorCode').val();
+        var NewVendor = $('#Vendor').val().toLowerCase().trim();
         var newisActive = $('#isActive').prop('checked');
         // Check if the KPI Group Name or KPI Group Code already exists in DataTable
-        var table = $('#TblDivision').DataTable();
+        var table = $('#TblVendor').DataTable();
         var existingData = table.rows().data();
         var isDuplicate = false;
         existingData.each(function (row) {
             //ketan start 20240307 
-            var DivisionCode = row[2];
-            var Division = row[3].toLowerCase().trim();
+            var VendorCode = row[2];
+            var Vendor = row[3].toLowerCase().trim();
             var isActive = row[4];
             //ketan end 20240307
             // Convert isActive to boolean for comparison
             isActive = (isActive === 'True');
-            if (DivisionCode === NewDivisionCode && Division === NewDivision && isActive === newisActive) {
+            if (VendorCode === NewVendorCode && Vendor === NewVendor && isActive === newisActive) {
                 isDuplicate = true;
                 return false;
             }
         });
         if (isDuplicate) {
-            showNotification("Duplicate entry: Division already exists", 'error');
+            showNotification("Duplicate entry: Vendor already exists", 'error');
         } else {
             // Continue with the insert action
             var requestData = {
                 GUID: $('#GUID').val(),
-                DivisionCode: $('#DivisionCode').val(),
-                Division: $('#Division').val(),
+                VendorCode: $('#VendorCode').val(),
+                Vendor: $('#Vendor').val(),
                 IsActive: $('#isActive').prop('checked'),
             };
             // Make an AJAX call to the update action
             $.ajax({
                 type: 'POST',
-                url: '/Division/Update',
+                url: '/Vendor/Update',
                 contentType: 'application/json',
                 data: JSON.stringify(requestData),
                 success: function (response) {
@@ -335,7 +335,7 @@
                     // Fetch and bind data again after successful update
                     fetchDataAndBindTable();
                     resetModal();
-                    $('#createNewDivision').modal('hide');
+                    $('#createNewVendor').modal('hide');
                 },
                 error: function (error) {
                     // Handle error, e.g., show an error notification
@@ -350,7 +350,7 @@
         // Make an AJAX call to retrieve the updated data
         $.ajax({
             type: 'GET',
-            url: '/Division/GetAllData',
+            url: '/Vendor/GetAllData',
             success: function (data) {
                 // Bind the updated data to the table
                 bindTableData(data);
@@ -389,17 +389,17 @@
         var errors = [];
         //Apply the same validation rules as defined in the createNewIndustryGroupForm
         if (!row.division) {
-            errors.push("Row " + (index + 1) + ": Please enter a Division");
+            errors.push("Row " + (index + 1) + ": Please enter a Vendor");
             return errors;
         }
         else {
             if (row.division.length < 3 || row.division.length > 50) {
-                errors.push("Row " + (index + 1) + ": Division must be between 3 and 50 characters long");
+                errors.push("Row " + (index + 1) + ": Vendor must be between 3 and 50 characters long");
                 console.log(errors);
                 return errors;
             }
             if (!/^[a-zA-Z0-9\s]+$/.test(row.division)) {
-                errors.push("Row " + (index + 1) + ": Special characters are not allowed in Division");
+                errors.push("Row " + (index + 1) + ": Special characters are not allowed in Vendor");
                 console.log(errors);
                 return errors;
             }
@@ -410,7 +410,7 @@
         var formData = new FormData();
         formData.append('file', $('#fileInput')[0].files[0]);
         $.ajax({
-            url: '/Division/Upload',
+            url: '/Vendor/Upload',
             type: 'POST',
             data: formData,
             processData: false,
@@ -438,7 +438,7 @@
     });
     //ketan start 20240307 
     $("#btnDeleteData").click(function () {
-        var table = $('#TblDivision').DataTable();
+        var table = $('#TblVendor').DataTable();
         if (table.rows().count() === 0) {
             showNotification("No rows are present in the DataTable.", "error");
             return; // Stop further processing
@@ -476,7 +476,7 @@
             DeleteRowsData.push(DeleteRow);
         });
         console.log("DeleteRowsData:", DeleteRowsData);
-        fetch("/Division/Delete", {
+        fetch("/Vendor/Delete", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -500,20 +500,20 @@
     }
     $("#btnEditData").click(function () {
         resetModal();
-        var newselectedRowsData = $('#TblDivision').DataTable().rows({ selected: true }).data();
+        var newselectedRowsData = $('#TblVendor').DataTable().rows({ selected: true }).data();
         if (newselectedRowsData.length !== 1) {
             showNotification("Please select only one row.", "error");
             return;
         }
-        var table = $('#tblDivision').DataTable();
+        var table = $('#tblVendor').DataTable();
         var rowData = newselectedRowsData[0];
         var internalId = $(rowData[1]).data('id'); // Assuming the ID is in the first column
-        var DivisionCode = rowData[2];
-        var Division = rowData[3];
+        var VendorCode = rowData[2];
+        var Vendor = rowData[3];
         var IsActive = rowData[4];
         // Populate modal fields
-        $('#DivisionCode').val(DivisionCode);
-        $('#Division').val(Division);
+        $('#VendorCode').val(VendorCode);
+        $('#Vendor').val(Vendor);
         $('#GUID').val(internalId);
         if (IsActive == 'True') {
             $('#isActive').prop('checked', true).prop('disabled', false);
@@ -522,10 +522,10 @@
             $('#isActive').prop('checked', false).prop('disabled', false);
 
         }
-        // Change modal title to "Modify Division"
-        $('#lblmodeltitle').text('Modify Division');
+        // Change modal title to "Modify Vendor"
+        $('#lblmodeltitle').text('Modify Vendor');
         // Show the modal for editing
-        $('#createNewDivision').modal('show');
+        $('#createNewVendor').modal('show');
     });
     //ketan end
     return {

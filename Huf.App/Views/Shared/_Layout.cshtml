@@ -3,10 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ESG</title>
+    <title>Huf</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    @* <link rel="stylesheet" href="~/ESG.Web.App.styles.css" asp-append-version="true" /> *@
     <link rel="icon" type="image/x-icon" href="~/Assets/dist/img/LogoNewCenter.icon.png">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -110,6 +109,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
+                <!-- change logo to the huf -->
                 @* <img src="~/Assets/dist/img/ESGLogo.png" alt="AdminLTE Logo" style=" margin-left: 9px; width: 146px;"> *@
             </a>
             <!-- Sidebar -->
@@ -136,8 +136,57 @@
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <p>No menu items available.</p>
-                </nav>
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        
+        <!-- Vendor Master -->
+        <li class="nav-item">
+          <a href="vendor-master.html" class="nav-link">
+            <i class="nav-icon fas fa-user-tie"></i>
+            <p>Vendor Master</p>
+          </a>
+        </li>
+
+        <!-- Material Master -->
+        <li class="nav-item">
+          <a href="material-master.html" class="nav-link">
+            <i class="nav-icon fas fa-cubes"></i>
+            <p>Material Master</p>
+          </a>
+        </li>
+
+        <!-- Purchase Order -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-shopping-cart"></i>
+            <p>
+              Purchase Order
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="create-po.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Create Purchase Order</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="manage-po.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Manage Purchase Orders</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
