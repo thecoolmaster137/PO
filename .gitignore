@@ -1,0 +1,88 @@
+# .NET and ASP.NET Core
+bin/
+obj/
+*.db
+*.db-journal
+*.pdb
+*.cache
+*.userosscache
+*.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln.ide.workspace
+*.sln.ide.*
+
+# Logs
+*.log
+logs/
+
+# Rider files
+.idea/
+*.sln.iml
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Compiled files
+*.dll
+*.exe
+*.app
+*.so
+*.dylib
+*.pubxml
+*.pubxml.user
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Entity Framework migrations
+Migrations/
+
+# Visual Studio Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+.vscode/
+
+# Database files
+*.mdf
+*.ldf
+
+# Azure DevOps
+.vs/
+
+# Coverage and test results
+TestResults/
+*.coverage
+*.coveragexml
+*.trx
+coverage/
+
+
+# Migration files (only ignore compiled or temp files, not the source code)
+Migrations/*.designer.cs
+Migrations/*Snapshot.cs

@@ -1,0 +1,192 @@
+﻿
+.required-field {
+    color: red;
+    margin-left: 5px; /* Add some spacing between label and asterisk */
+}
+
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-15 {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+.custom {
+    width: 140px !important;
+}
+
+@media (max-width: 992px) {
+    .custom {
+        width: 100px !important;
+    }
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+    .styled-table thead tr {
+        background-color: #1da0f2;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #1da0f2;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #1da0f2;
+        }
+
+/* Apply custom styles to the table */
+#TblKPIParameter {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+    #TblKPIParameter thead th,
+    #TblKPIParameter tbody td {
+        padding: 12px;
+    }
+/* Style header checkboxes */
+.selectAllCheckbox {
+    transform: scale(1.2);
+}
+/* Style individual row checkboxes */
+.rowCheckbox {
+    transform: scale(1.2);
+}
+/* Style alternating row colors */
+#TblKPIParameter tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+/* Style selected rows */
+.selected {
+    background-color: #ffc107 !important;
+}
+/* Style CSV button */
+.icon-button {
+    display: inline-block;
+    padding: 4px 38px;
+    margin: 10px 0px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden; /* This is used to ensure the pseudo-element doesn't overflow */
+}
+/* Style paging options */
+.dataTables_length label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.custom {
+    background-color: rgb(16, 163, 226);
+    color: white;
+}
+/* .dt-buttons {
+        float: right;
+    }*/
+.clsoutput {
+    background-color: #d5d5d5;
+}
+
+.select-info {
+    padding-left: 16px;
+}
+
+/* Style the modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 9% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}
+
+/* Style the table within the modal */
+.modal-table {
+    max-height: 100%; /* Adjust as needed */
+    overflow-y: hidden !important;
+}
+/* Define a custom class for the modal's content container */
+.no-scroll {
+    overflow-y: hidden !important;
+}
+/* Define a CSS class for the comment textarea */
+.comment-textarea {
+    width: 300px; /* Adjust this value as needed */
+}
+/* Custom CSS for the modal width */
+.clsmodelwidth {
+    max-width: 100%;
+}

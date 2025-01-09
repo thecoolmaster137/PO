@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Assets/Js/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb">
+                    @* <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    @if (ViewBag.MenuPaths != null)
+                    {
+                    foreach (var path in ViewBag.MenuPaths)
+                    {
+                    var pathComponents = path.Split(new[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                    for (int i = 0; i < pathComponents.Length; i++)
+                    {
+                    <li class="breadcrumb-item active">@pathComponents[i]</li>
+                    }
+                    }
+                    } *@
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Divisions</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group float-right">
+
+                            <button type="button" class="btn btn-primary" id="btnEditData">
+                                <i class="fas fa-edit"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-danger" id="btnDeleteData">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            
+                            <button type="button" class="btn btn-primary" id="btnCreateData">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group3">
+                            <div class="table-responsive">
+                                <table id="TblDivision" class="table table-striped styled-table table-bordered dataTable" Style="width: 100%;">
+                                    <thead>
+
+                                        <tr>
+                                            <th class="select-checkbox">
+                                                <input type="checkbox" class="selectAllCheckbox">
+                                            </th>
+                                            <th>No</th>
+                                            <th>Division Code</th>
+                                            <th>Division</th>
+                                            <th>Is Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* <div id="loader" class="loader"></div> *@
+    @*     <div class="loader-overlay">
+    <div class="loader" id="loader"></div>
+    </div> *@
+</section>
+<!-- Modal -->
+<div class="modal fade" id="createNewDivision" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="createNewDivisionForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lblmodeltitle">Create New Division</h5>
+                    <div class="btn-group float-right">
+                        <button type="submit" class="btn btn-primary btn-equal-size" id="btnSave">Save</button>
+                        &nbsp;&nbsp;
+                        <button type="button" class="btn btn-secondary btn-equal-size" data-dismiss="modal" id="btnCancel">Cancel</button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="DivisionCode">Division Code<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="DivisionCode" id="DivisionCode" placeholder="Division Code">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="Division">Division<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="Division" id="Division" placeholder="Division Name">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <label id="GUID" hidden></label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label">  Is Active</label>
+                        <div class="col-md-8">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="isActive">
+                                <label class="custom-control-label" for="isActive"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/plugins/jquery/jquery.min.js"></script>
+<script src="~/Assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/Assets/plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="~/Assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assets/Js/Project/Vendor/VendorIndex.js</script>
+<script src="~/Assets/Js/Project/Common.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        GetForms.init();
+    });
+</script>

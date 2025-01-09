@@ -1,0 +1,115 @@
+.no-underline {
+    text-decoration: none;
+}
+.connections-card * {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.connections-card body {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.connections-card .list-wrap label {
+    float: left;
+    color: #9bc3e9;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.2em;
+}
+
+.connections-card .search-box {
+    float: left;
+    clear: left;
+    width: 70%;
+    padding: 0.4em;
+    font-size: 1em;
+    color: #555;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+.connections-card .list-count {
+    float: left;
+    text-align: center;
+    width: 30%;
+    padding: 0.5em;
+    color: #ddd;
+}
+
+.connections-card li {
+    transition-property: margin, background-color, border-color;
+    transition-duration: .4s, .2s, .2s;
+    transition-timing-function: ease-in-out, ease, ease;
+}
+
+.connections-card .empty-item {
+    transition-property: opacity;
+    transition-duration: 0s;
+    transition-delay: 0s;
+    transition-timing-function: ease;
+}
+
+.connections-card .empty .empty-item {
+    transition-property: opacity;
+    transition-duration: .2s;
+    transition-delay: .3s;
+    transition-timing-function: ease;
+}
+
+.connections-card .hiding {
+    margin-left: -100%;
+    opacity: 0.5;
+}
+
+.connections-card .hidden {
+    display: none;
+}
+
+.connections-card ul {
+    float: left;
+    width: 100%;
+    margin: 2em 0;
+    padding: 0;
+    position: relative;
+}
+
+.connections-card li {
+    float: left;
+    clear: left;
+    width: 100%;
+    margin: 0.2em 0;
+    padding: 0.5em 0.8em;
+    list-style: none;
+    background-color: #f2f2f2;
+    border-left: 5px solid #003842;
+    cursor: pointer;
+    color: #333;
+    position: relative;
+    z-index: 2;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+    .connections-card li:hover {
+        background-color: #f9f9f9;
+        border-color: #9bc3e9;
+    }
+
+.connections-card .empty-item {
+    background: #fff;
+    color: #ddd;
+    margin: 0.2em 0;
+    padding: 0.5em 0.8em;
+    font-style: italic;
+    border: none;
+    text-align: center;
+    visibility: hidden;
+    opacity: 0;
+    float: left;
+    clear: left;
+    width: 100%;
+}
+
+.connections-card .empty .empty-item {
+    opacity: 1;
+    visibility: visible;
+}
