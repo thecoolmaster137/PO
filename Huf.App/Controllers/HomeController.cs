@@ -15,6 +15,8 @@ namespace Huf.App.Controllers
 
         public IActionResult Index()
         {
+            var username = "Test User";
+            ViewBag.Username = username;
             return View();
         }
 

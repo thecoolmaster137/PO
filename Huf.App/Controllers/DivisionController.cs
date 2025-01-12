@@ -15,6 +15,8 @@ namespace Huf.App.Controllers
         
         public async Task<IActionResult> Index()
         { 
+            var username = "Test User";
+            ViewBag.Username = username;
             return View();
         }
         //public async Task<IActionResult> GetAllData()
