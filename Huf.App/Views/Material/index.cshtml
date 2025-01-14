@@ -67,8 +67,14 @@
                                                 <input type="checkbox" class="selectAllCheckbox">
                                             </th>
                                             <th>No</th>
-                                            <th>Material Code</th>
-                                            <th>Material</th>
+                                            <th>Code</th>
+                                            <th>Short Text</th>
+                                            <th>Long Text</th>
+                                            <th>Unit</th>
+                                            <th>Reorder Level</th>
+                                            <th>Min Order Quantity</th>
+                                            <th>Created Date</th>
+                                            <th>Updated Date</th>
                                             <th>Is Active</th>
                                         </tr>
                                     </thead>
@@ -121,7 +127,7 @@
                     <div class="col-md-12 form-group">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="Material">Material<span style="color:red">*</span></label>
+                                <label for="Material">Short Text<span style="color:red">*</span></label>
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
@@ -133,11 +139,83 @@
                                     </div>
                                 </div>
                             </div>
-                            <label id="GUID" hidden></label>
+                            <label id="id" hidden></label>
                         </div>
                     </div>
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="LongText">Long Text<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="LongText" id="LongText" placeholder="Long Text">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="Unit">Unit<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="Unit" id="Unit" placeholder="Unit">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="ReorderLevel">Reorder Level<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="ReorderLevel" id="ReorderLevel" placeholder="ReorderLevel">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="MinOrderQty">Min Order Qty<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="MinOrderQty" id="MinOrderQty" placeholder="Min Order Qty">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-group"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row">
-                        <label class="col-md-4 col-form-label">  Is Active</label>
+                        <label class="col-md-4 col-form-label">Is Active</label>
                         <div class="col-md-8">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="isActive">

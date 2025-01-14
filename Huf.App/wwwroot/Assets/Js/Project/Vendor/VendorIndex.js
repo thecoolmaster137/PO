@@ -88,9 +88,9 @@
         var tbody = $('#TblVendor tbody');
         arrayReturn.forEach(function (rowData) {
             var row = $('<tr>');
-            //ketan start 20240307
+            
             row.append('<td><input type="checkbox" class="rowCheckbox"></td>');
-            //ketan end 20240307
+            
             rowData.forEach(function (cellData) {
                 row.append($('<td>').html(cellData)); // Use html() to render HTML content
             });
@@ -151,7 +151,7 @@
                 }
             ],
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        //ketan start 20240307
+        
 
         function adjustTableColumns() {
             $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
@@ -252,10 +252,10 @@
         var existingData = table.rows().data();
         var isDuplicate = false;
         existingData.each(function (row) {
-            //ketan start 20240307
+            
             var VendorCode = row[2];
             var Vendor = row[3].toLowerCase().trim();
-            //ketan end 20240307
+            
             if (VendorCode === NewVendorCode && Vendor === NewVendor) {
                 isDuplicate = true;
                 return false;
@@ -301,11 +301,11 @@
         var existingData = table.rows().data();
         var isDuplicate = false;
         existingData.each(function (row) {
-            //ketan start 20240307 
+            
             var VendorCode = row[2];
             var Vendor = row[3].toLowerCase().trim();
             var isActive = row[4];
-            //ketan end 20240307
+            
             // Convert isActive to boolean for comparison
             isActive = (isActive === 'True');
             if (VendorCode === NewVendorCode && Vendor === NewVendor && isActive === newisActive) {
@@ -436,7 +436,7 @@
             //validateExcelData(file); // Validate Excel data before uploading
         }
     });
-    //ketan start 20240307 
+    
     $("#btnDeleteData").click(function () {
         var table = $('#TblVendor').DataTable();
         if (table.rows().count() === 0) {
@@ -527,7 +527,7 @@
         // Show the modal for editing
         $('#createNewVendor').modal('show');
     });
-    //ketan end
+    
     return {
         init: function (data) {
             //fetchDataAndBindTable();

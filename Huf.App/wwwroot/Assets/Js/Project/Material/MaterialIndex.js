@@ -1,15 +1,20 @@
 var GetForms = function () {
-    function showLoader() {
-        $('#loader').show(); // Show the loader
-        // Show loader overlay
-        document.querySelector('.loader-overlay').style.display = 'block';
-    }
+   
+    // function showLoader() {
+    //     $('#loader').show(); // Show the loader
+    //     // Show loader overlay
+    //     document.querySelector('.loader-overlay').style.display = 'block';
+    // }
+
+
     // Function to hide loader
-    function hideLoader() {
-        $('#loader').hide(); // Hide the loader
-        // Hide loader overlay
-        document.querySelector('.loader-overlay').style.display = 'none';
-    }
+    // function hideLoader() {
+    //     $('#loader').hide(); // Hide the loader
+    //     // Hide loader overlay
+    //     document.querySelector('.loader-overlay').style.display = 'none';
+    // }
+
+
     // Initialize the jQuery Validation plugin for your form
     $("#createNewMaterialForm").validate({
         rules: {
@@ -25,6 +30,24 @@ var GetForms = function () {
                 maxlength: 50,
                 pattern: /^[a-zA-Z0-9\s-._]+$/,
             },
+            LongText: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9\s-._]+$/,
+            },
+            Unit: {
+                required: true,
+                minlength: 5,
+                maxlength: 50,
+                pattern: /^[a-zA-Z0-9\s-._]+$/,
+            },
+            ReorderLevel: {
+                required: true,
+            },
+            MinOrderQty: {
+                required: true,
+            },
         },
         messages: {
             MaterialCode: {
@@ -38,6 +61,24 @@ var GetForms = function () {
                 minlength: "Material must be at least 5 characters long",
                 maxlength: "Material must be at most 50 characters long",
                 pattern: "Special characters are not allowed",
+            },
+            LongText: {
+                required: "Please enter a Long Text",
+                minlength: "Long Text must be at least 5 characters long",
+                maxlength: "Long Text must be at most 50 characters long",
+                pattern: "Special characters are not allowed",
+            },
+            Unit: {
+                required: "Please enter a Unit",
+                minlength: "Unit must be at least 5 characters long",
+                maxlength: "Unit must be at most 50 characters long",
+                pattern: "Special characters are not allowed",
+            },
+            ReorderLevel: {
+                required: "Please enter a Reorder Level",
+            },
+            MinOrderQty: {
+                required: "Please enter a Min Order Qty",
             },
         },
         errorElement: 'span',
@@ -65,16 +106,23 @@ var GetForms = function () {
     });
     function bindTableData(data) {
         console.log(data);
-        var resultData = data;
+        var resultData = JSON.parse(data);;
+        console.log(resultData.length);
         var arrayReturn = [];
         srno = 1
         for (var i = 0; i < resultData.length; i++) {
             var result = resultData[i];
             var row = [];
-            var internalId = result?.guid;
+            var internalId = result?.id;
             row.push('<td style="padding: 0px; border: 0px;" data-id="' + internalId + '">' + srno + '</td>');
-            row.push(result?.materialCode);
-            row.push(result?.material);
+            row.push(result?.code);
+            row.push(result?.shortText);
+            row.push(result?.lognText);
+            row.push(result?.unit);
+            row.push(result?.reorderLevel);
+            row.push(result?.minOrderQuantity);
+            row.push(result?.createdDate);
+            row.push(result?.updatedDate);
             row.push(result.isActive ? 'True' : 'False');
             arrayReturn.push(row);
             srno++
@@ -209,6 +257,10 @@ var GetForms = function () {
         // Reset input fields in the modal
         $('#MaterialCode').val('');
         $('#Material').val('');
+        $('#LongText').val('');
+        $('#Unit').val('');
+        $('#ReorderLevel').val('');
+        $('#MinOrderQt').val('');
         $('#GUID').val('');
         $('#isActive').prop('checked', false).prop('disabled', false);
         $('#createNewMaterialForm').find('.form-control').val('').removeClass('is-invalid');
@@ -246,6 +298,11 @@ var GetForms = function () {
     function insertRecord() {
         var NewMaterialCode = $('#MaterialCode').val();
         var NewMaterial = $('#Material').val().toLowerCase().trim();
+        var	NewLongText = $('#LongText').val().toLowerCase().trim();;
+        var	NewUnit = $('#Unit').val();
+        var	NewReorderLevel = $('#ReorderLevel').val();
+        var	NewMinOrderQty = $('#MinOrderQty').val();
+
         var table = $('#TblMaterial').DataTable();
         var existingData = table.rows().data();
         var isDuplicate = false;
@@ -253,8 +310,9 @@ var GetForms = function () {
             
             var MaterialCode = row[2];
             var Material = row[3].toLowerCase().trim();
+            var LongText = row[4].toLowerCase().trim();
             
-            if (MaterialCode === NewMaterialCode && Material === NewMaterial) {
+            if (MaterialCode === NewMaterialCode && Material === NewMaterial && NewLongText === LongText) {
                 isDuplicate = true;
                 return false;
             }
@@ -264,10 +322,21 @@ var GetForms = function () {
         } else {
             // Continue with the insert action
             var requestData = {
-                MaterialCode: $('#MaterialCode').val(),
-                Material: $('#Material').val(),
-                IsActive: $('#isActive').prop('checked'),
+                id: 0,
+                code: $('#MaterialCode').val(),
+                shortText: $('#Material').val(),
+                lognText: $('#LongText').val(),
+                unit: $('#Unit').val(),
+                reorderLevel: $('#ReorderLevel').val(),
+                minOrderQuantity: $('#MinOrderQty').val(),
+                createdDate: null,
+                updatedDate: null,
+                isActive: $('#isActive').prop('checked')                
             };
+
+            console.log("Insert Req Data: ");
+            console.log(requestData);
+
             // Make an AJAX call to the insert action
             $.ajax({
                 type: 'POST',
@@ -293,8 +362,12 @@ var GetForms = function () {
     function updateRecord() {
         var NewMaterialCode = $('#MaterialCode').val();
         var NewMaterial = $('#Material').val().toLowerCase().trim();
+        var	NewLongText = $('#LongText').val().toLowerCase().trim();;
+        var	NewUnit = $('#Unit').val();
+        var	NewReorderLevel = $('#ReorderLevel').val();
+        var	NewMinOrderQty = $('#MinOrderQty').val();
         var newisActive = $('#isActive').prop('checked');
-        // Check if the KPI Group Name or KPI Group Code already exists in DataTable
+        
         var table = $('#TblMaterial').DataTable();
         var existingData = table.rows().data();
         var isDuplicate = false;
@@ -302,11 +375,12 @@ var GetForms = function () {
             
             var MaterialCode = row[2];
             var Material = row[3].toLowerCase().trim();
-            var isActive = row[4];
+            var LongText = row[4].toLowerCase().trim();
+            var isActive = row[10];
             
             // Convert isActive to boolean for comparison
             isActive = (isActive === 'True');
-            if (MaterialCode === NewMaterialCode && Material === NewMaterial && isActive === newisActive) {
+            if (MaterialCode === NewMaterialCode && Material === NewMaterial && NewLongText === LongText && isActive === newisActive) {
                 isDuplicate = true;
                 return false;
             }
@@ -316,11 +390,34 @@ var GetForms = function () {
         } else {
             // Continue with the insert action
             var requestData = {
-                GUID: $('#GUID').val(),
-                MaterialCode: $('#MaterialCode').val(),
-                Material: $('#Material').val(),
-                IsActive: $('#isActive').prop('checked'),
+
+                // Id: 0,
+                // Code: $('#MaterialCode').val(),
+                // ShortText: $('#Material').val(),
+                // LognText: $('#LongText').val(),
+                // Unit: $('#Unit').val(),
+                // ReorderLevel: $('#ReorderLevel').val(),
+                // MinOrderQuantity: $('#MinOrderQty').val(),
+                // CreatedDate: null,
+                // UpdatedDate: null,
+                // IsActive: $('#isActive').prop('checked'),
+
+
+                id: 0,
+                code: $('#MaterialCode').val(),
+                shortText: $('#Material').val(),
+                lognText: $('#LongText').val(),
+                unit: $('#Unit').val(),
+                reorderLevel: $('#ReorderLevel').val(),
+                minOrderQuantity: $('#MinOrderQty').val(),
+                createdDate: null,
+                updatedDate: null,
+                isActive: $('#isActive').prop('checked')  
+
             };
+
+
+
             // Make an AJAX call to the update action
             $.ajax({
                 type: 'POST',
@@ -344,7 +441,7 @@ var GetForms = function () {
     }
     // Function to fetch and bind data again
     function fetchDataAndBindTable() {
-        showLoader();
+        //showLoader();
         // Make an AJAX call to retrieve the updated data
         $.ajax({
             type: 'GET',
@@ -353,12 +450,12 @@ var GetForms = function () {
                 // Bind the updated data to the table
                 console.log(data);
                 bindTableData(data);
-                hideLoader();
+                //hideLoader();
             },
             error: function (error) {
                 // Handle error, e.g., show an error notification
                 showNotification(error.responseText, 'error');
-                hideLoader();
+                //hideLoader();
             }
         });
     }
@@ -436,10 +533,19 @@ var GetForms = function () {
         var internalId = $(rowData[1]).data('id'); // Assuming the ID is in the first column
         var MaterialCode = rowData[2];
         var Material = rowData[3];
-        var IsActive = rowData[4];
+        var LongText = rowData[4];
+        var Unit = rowData[5];
+        var ReorderLevel = rowData[6];
+        var MinOrderQty = rowData[7];
+        var IsActive = rowData[10];
         // Populate modal fields
         $('#MaterialCode').val(MaterialCode);
         $('#Material').val(Material);
+        $('#LongText').val(LongText);
+        $('#Unit').val(Unit);
+        $('#ReorderLevel').val(ReorderLevel);
+        $('#MinOrderQty').val(MinOrderQty);
+
         $('#GUID').val(internalId);
         if (IsActive == 'True') {
             $('#isActive').prop('checked', true).prop('disabled', false);
@@ -456,7 +562,7 @@ var GetForms = function () {
     
     return {
         init: function (data) {
-            //fetchDataAndBindTable();
+            fetchDataAndBindTable();
         }
     };
 }(); //var GetForms

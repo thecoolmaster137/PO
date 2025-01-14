@@ -35,6 +35,8 @@ public class MaterialController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(MaterialMaster material)
     {
+        Console.WriteLine("Create Req: ");
+        Console.WriteLine(material);
         await _materialService.AddAsync(material);
         return CreatedAtAction(nameof(GetById), new { id = material.Id }, material);
     }
