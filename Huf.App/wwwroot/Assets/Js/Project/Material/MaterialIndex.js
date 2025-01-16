@@ -261,7 +261,7 @@ var GetForms = function () {
         $('#Unit').val('');
         $('#ReorderLevel').val('');
         $('#MinOrderQt').val('');
-        $('#GUID').val('');
+        $('#Internalid').val('');
         $('#isActive').prop('checked', false).prop('disabled', false);
         $('#createNewMaterialForm').find('.form-control').val('').removeClass('is-invalid');
         $('#createNewMaterialForm').removeClass('was-validated');
@@ -390,20 +390,7 @@ var GetForms = function () {
         } else {
             // Continue with the insert action
             var requestData = {
-
-                // Id: 0,
-                // Code: $('#MaterialCode').val(),
-                // ShortText: $('#Material').val(),
-                // LognText: $('#LongText').val(),
-                // Unit: $('#Unit').val(),
-                // ReorderLevel: $('#ReorderLevel').val(),
-                // MinOrderQuantity: $('#MinOrderQty').val(),
-                // CreatedDate: null,
-                // UpdatedDate: null,
-                // IsActive: $('#isActive').prop('checked'),
-
-
-                id: 0,
+                id: $('#Internalid').val(),
                 code: $('#MaterialCode').val(),
                 shortText: $('#Material').val(),
                 lognText: $('#LongText').val(),
@@ -413,30 +400,25 @@ var GetForms = function () {
                 createdDate: null,
                 updatedDate: null,
                 isActive: $('#isActive').prop('checked')  
-
             };
 
-
-
-            // Make an AJAX call to the update action
             $.ajax({
-                type: 'POST',
-                url: '/Material/Update',
+                type: 'POST', // Use POST since your controller is expecting POST
+                url: `/Material/Update`, // No need for the id in the URL since you are sending it in the body
                 contentType: 'application/json',
-                data: JSON.stringify(requestData),
+                data: JSON.stringify(requestData), // Send the request data as JSON
                 success: function (response) {
-                    // Handle success, e.g., show a notification
                     showNotification(response, 'success');
-                    // Fetch and bind data again after successful update
-                    fetchDataAndBindTable();
-                    resetModal();
-                    $('#createNewMaterial').modal('hide');
+                    fetchDataAndBindTable(); // Refresh the table
+                    resetModal(); // Reset the modal form
+                    $('#createNewMaterial').modal('hide'); // Close the modal
                 },
                 error: function (error) {
-                    // Handle error, e.g., show an error notification
                     showNotification(error.responseText, 'error');
                 }
             });
+            
+
         }
     }
     // Function to fetch and bind data again
@@ -494,8 +476,8 @@ var GetForms = function () {
     
         selectedRowsData.forEach(rowData => {
             const IdElement = $(rowData[1]);
-            const Id = IdElement.data("id");
-            console.log("Id is:", Id);
+            const Id = IdElement.data("Internalid");
+            console.log("Internalid is:", Id);
     
             // Send a DELETE request for each ID and track the promise
             const deletePromise = fetch(`/Material/Delete/${Id}`, {
@@ -529,10 +511,6 @@ var GetForms = function () {
             });
     }
     
-    
-
-    
-    
 
     $("#btnEditData").click(function () {
         resetModal();
@@ -558,8 +536,7 @@ var GetForms = function () {
         $('#Unit').val(Unit);
         $('#ReorderLevel').val(ReorderLevel);
         $('#MinOrderQty').val(MinOrderQty);
-
-        $('#GUID').val(internalId);
+        $('#Internalid').val(internalId);
         if (IsActive == 'True') {
             $('#isActive').prop('checked', true).prop('disabled', false);
 

@@ -74,20 +74,36 @@ namespace Huf.App.Controllers
 
             return Ok("Material inserted successfully.");
 
-            // var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/Material", model);
-            // response.EnsureSuccessStatusCode();
-            // return Ok("Material inserted successfully.");
         }
 
         [HttpPost]
         public async Task<IActionResult> Update([FromBody] MaterialRequestModel model)
         {
             Console.WriteLine("Update Model");
-            Console.WriteLine(model);
-            var response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/api/Material", model);
-            response.EnsureSuccessStatusCode();
+
+            if (model == null || model.Id <= 0)
+            {
+                return BadRequest("Invalid material data.");
+            }
+
+            model.UpdatedDate = DateTime.UtcNow; // Set initial updated date
+
+            _logger.LogDebug("Sending payload for update: {@model}", model);
+
+            // Call the API to update the material
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"{_baseUrl}/api/Material/{model.Id}", model);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorDetails = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Update API Error: {ErrorDetails}", errorDetails);
+                return StatusCode((int)response.StatusCode, $"Failed to update material: {errorDetails}");
+            }
+
             return Ok("Material updated successfully.");
         }
+
+
 
         [HttpDelete("Material/DELETE/{id}")]
         public async Task<IActionResult> Delete(int id)
