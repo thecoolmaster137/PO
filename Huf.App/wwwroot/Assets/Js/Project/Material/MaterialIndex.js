@@ -1,18 +1,18 @@
 var GetForms = function () {
    
-    // function showLoader() {
-    //     $('#loader').show(); // Show the loader
-    //     // Show loader overlay
-    //     document.querySelector('.loader-overlay').style.display = 'block';
-    // }
+    function showLoader() {
+        $('#loader').show(); // Show the loader
+        // Show loader overlay
+        document.querySelector('.loader-overlay').style.display = 'block';
+    }
 
 
     // Function to hide loader
-    // function hideLoader() {
-    //     $('#loader').hide(); // Hide the loader
-    //     // Hide loader overlay
-    //     document.querySelector('.loader-overlay').style.display = 'none';
-    // }
+    function hideLoader() {
+        $('#loader').hide(); // Hide the loader
+        // Hide loader overlay
+        document.querySelector('.loader-overlay').style.display = 'none';
+    }
 
 
     // Initialize the jQuery Validation plugin for your form
@@ -441,7 +441,7 @@ var GetForms = function () {
     }
     // Function to fetch and bind data again
     function fetchDataAndBindTable() {
-        //showLoader();
+        showLoader();
         // Make an AJAX call to retrieve the updated data
         $.ajax({
             type: 'GET',
@@ -450,12 +450,12 @@ var GetForms = function () {
                 // Bind the updated data to the table
                 console.log(data);
                 bindTableData(data);
-                //hideLoader();
+                hideLoader();
             },
             error: function (error) {
                 // Handle error, e.g., show an error notification
                 showNotification(error.responseText, 'error');
-                //hideLoader();
+                hideLoader();
             }
         });
     }
@@ -488,39 +488,52 @@ var GetForms = function () {
             }
         });
     });
+
     function deleteRecord(selectedRowsData) {
-        var DeleteRowsData = [];
+        let deletePromises = []; // To track all deletion requests
+    
         selectedRowsData.forEach(rowData => {
-            const GuidElement = $(rowData[1]);
-            const Guid = GuidElement.data("id");
-            var DeleteRow = {
-                Guid: Guid,
-            };
-            DeleteRowsData.push(DeleteRow);
-        });
-        console.log("DeleteRowsData:", DeleteRowsData);
-        fetch("/Material/Delete", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(DeleteRowsData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Server response:", data);
-                if (data.success) {
-                    fetchDataAndBindTable();
-                    showNotification("Data Deleted successfully.", "success");
-                } else {
-                    showNotification("An error occurred while Deleting data.", "error");
+            const IdElement = $(rowData[1]);
+            const Id = IdElement.data("id");
+            console.log("Id is:", Id);
+    
+            // Send a DELETE request for each ID and track the promise
+            const deletePromise = fetch(`/Material/Delete/${Id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
                 }
             })
-            .catch(error => {
-                console.error("Error:", error);
-                showNotification("An error occurred while Deleting data.", "error");
+                .then(response => {
+                    if (response.ok) {
+                        console.log(`Record with ID ${Id} deleted successfully.`);
+                    } else {
+                        console.error(`Failed to delete record with ID ${Id}.`);
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error while deleting record with ID ${Id}:`, error);
+                });
+    
+            deletePromises.push(deletePromise);
+        });
+    
+        // Once all delete requests are completed, refresh table and show notification
+        Promise.all(deletePromises)
+            .then(() => {
+                fetchDataAndBindTable(); // Refresh table
+                showNotification("Data Deleted successfully.", "success");
+            })
+            .catch(() => {
+                showNotification("An error occurred while deleting data.", "error");
             });
     }
+    
+    
+
+    
+    
+
     $("#btnEditData").click(function () {
         resetModal();
         var newselectedRowsData = $('#TblMaterial').DataTable().rows({ selected: true }).data();

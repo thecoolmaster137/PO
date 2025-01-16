@@ -89,13 +89,19 @@ namespace Huf.App.Controllers
             return Ok("Material updated successfully.");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Delete([FromBody] List<Guid> ids)
+        [HttpDelete("Material/DELETE/{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/Material/Delete", ids);
-            response.EnsureSuccessStatusCode();
-            return Ok("Material deleted successfully.");
+            var response = await _httpClient.DeleteAsync($"{_baseUrl}/api/Material/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return NoContent(); // Standard response for successful delete
+            }
+
+            return StatusCode((int)response.StatusCode, $"Failed to delete material with ID {id}.");
         }
+
     }
 
     public class MaterialRequestModel
